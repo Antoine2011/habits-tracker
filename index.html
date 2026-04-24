@@ -1,16 +1,32 @@
-<h1>Habit Tracker</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Habit Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-<input id="username" placeholder="Nom utilisateur">
-<button onclick="login()">Se connecter</button>
+<body>
 
-<hr>
-
-<input id="habitInput" placeholder="Nouvelle habitude">
-<button onclick="addHabit()">Ajouter</button>
-
-<h3 id="date"></h3>
-
-<ul id="habitList"></ul>
 <div class="container">
-  <!-- tout ton contenu ici -->
+
+  <h1>Habit Tracker</h1>
+
+  <input id="username" placeholder="Nom utilisateur">
+  <button onclick="login()">Se connecter</button>
+
+  <hr>
+
+  <input id="habitInput" placeholder="Nouvelle habitude">
+  <button onclick="addHabit()">Ajouter</button>
+
+  <h3 id="date"></h3>
+
+  <ul id="habitList"></ul>
+
 </div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
