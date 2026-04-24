@@ -49,3 +49,7 @@ ul {
   color: #f97316;
   font-weight: bold;
 }
+.container {
+  max-width: 500px;
+  margin: auto;
+}
