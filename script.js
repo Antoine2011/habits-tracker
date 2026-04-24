@@ -18,8 +18,6 @@ function login() {
   localStorage.setItem("user", username);
   currentUser = username;
 
-  alert("Connecté en tant que " + username);
-
   loadUserData();
 }
 
@@ -27,8 +25,9 @@ function login() {
 function loadUserData() {
   habits = JSON.parse(localStorage.getItem("habits_" + currentUser)) || [];
 
-  // cacher input username
+  // cacher login
   document.getElementById("username").style.display = "none";
+  document.querySelector("button").style.display = "none";
 
   render();
 }
@@ -108,11 +107,15 @@ function render() {
     list.appendChild(li);
   });
 
-  // stats
+  // 📊 stats
   let doneCount = habits.filter(h => h.dates[today]).length;
 
   document.getElementById("stats").innerText =
     doneCount + " / " + habits.length + " habitudes faites aujourd’hui";
+
+  // 📈 progression
+  let percent = habits.length ? (doneCount / habits.length) * 100 : 0;
+  document.getElementById("progress").style.width = percent + "%";
 }
 
 // auto load
