@@ -48,26 +48,44 @@ function toggleHabit(index) {
 }
 
 // RESET automatique (juste visuel car date change)
+function getStreak(dates) {
+  let streak = 0;
+  let currentDate = new Date();
+
+  while (true) {
+    const dateStr = currentDate.toISOString().split("T")[0];
+    if (dates[dateStr]) {
+      streak++;
+      currentDate.setDate(currentDate.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+}
+
 function render() {
   const list = document.getElementById("habitList");
   list.innerHTML = "";
 
   habits.forEach((habit, index) => {
     const doneToday = habit.dates[today] || false;
+    const streak = getStreak(habit.dates);
 
     const li = document.createElement("li");
 
     li.innerHTML = `
-      <input type="checkbox" ${doneToday ? "checked" : ""} 
-      onchange="toggleHabit(${index})">
-      ${habit.name}
+      <div class="habit-item">
+        <input type="checkbox" ${doneToday ? "checked" : ""} 
+        onchange="toggleHabit(${index})">
+        
+        <span>${habit.name}</span>
+        
+        <span class="streak">🔥 ${streak}</span>
+      </div>
     `;
 
     list.appendChild(li);
   });
-}
-
-// AUTO LOAD si déjà connecté
-if (currentUser) {
-  loadUserData();
 }
