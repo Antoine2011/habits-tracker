@@ -2,7 +2,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSy...",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
-  projectId: "habits-tracker-4ee66",
+  projectId: "habits-tracker-4ee66"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -12,6 +12,7 @@ const db = firebase.firestore();
 
 let user = null;
 let habits = [];
+let isPro = false;
 
 const today = new Date().toISOString().split("T")[0];
 
@@ -47,13 +48,21 @@ auth.onAuthStateChanged(u => {
 // LOAD
 async function loadData() {
   const doc = await db.collection("users").doc(user.uid).get();
-  habits = doc.exists ? doc.data().habits : [];
+
+  if (doc.exists) {
+    habits = doc.data().habits || [];
+    isPro = doc.data().isPro || false;
+  }
+
   render();
 }
 
 // SAVE
 function save() {
-  db.collection("users").doc(user.uid).set({ habits });
+  db.collection("users").doc(user.uid).set({
+    habits,
+    isPro
+  });
 }
 
 // ADD
@@ -62,8 +71,8 @@ function addHabit() {
 
   if (!input.value) return alert("Entre une habitude !");
 
-  if (habits.length >= 5) {
-    alert("🚀 Passe en version PRO !");
+  if (!isPro && habits.length >= 5) {
+    alert("🚀 Passe en PRO pour ajouter plus d’habitudes !");
     return;
   }
 
@@ -100,7 +109,7 @@ function getStreak(dates) {
   return s;
 }
 
-// RENDER (UNE SEULE VERSION)
+// RENDER
 function render() {
   const list = document.getElementById("habitList");
   list.innerHTML = "";
@@ -133,12 +142,15 @@ function render() {
   });
 
   let total = habits.length;
-  let doneToday = habits.filter(h => h.dates[today]).length;
-  let percent = total ? Math.round((doneToday / total) * 100) : 0;
+  let percent = total ? Math.round((done / total) * 100) : 0;
 
   document.getElementById("dashboard").innerHTML = `
     🔥 Record : ${best} jours <br>
     📊 Complétion : ${percent}% <br>
     🎯 Habitudes : ${total}
   `;
+
+  // 👑 STATUS PRO
+  document.getElementById("proStatus").innerText =
+    isPro ? "👑 Compte PRO" : "🆓 Version gratuite";
 }
