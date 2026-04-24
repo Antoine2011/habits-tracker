@@ -45,6 +45,10 @@ function addHabit() {
   save();
   render();
 }
+  if (!input.value) {
+    alert("Entre une habitude !");
+  return;
+}
 
 // Toggle pour aujourd’hui
 function toggleHabit(index) {
