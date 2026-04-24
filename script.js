@@ -89,3 +89,6 @@ function render() {
     list.appendChild(li);
   });
 }
+if (currentUser) {
+  loadUserData();
+}
