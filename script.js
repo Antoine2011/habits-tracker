@@ -1,56 +1,78 @@
-let currentUser = localStorage.getItem("user") || null;
+// CONFIG FIREBASE
+const firebaseConfig = {
+  apiKey: "AIzaSyDr39wbDbC0pE5huN_izcfmr5f9ODA4qD0",
+  authDomain: "habits-tracker-4ee66.firebaseapp.com",
+  projectId: "habits-tracker-4ee66",
+  storageBucket: "habits-tracker-4ee66.firebasestorage.app",
+  messagingSenderId: "431055088426",
+  appId: "1:431055088426:web:85de2193119ef47ecbcc53"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+let user = null;
 let habits = [];
 
 const today = new Date().toISOString().split("T")[0];
-document.getElementById("date").innerText = "Aujourd'hui : " + today;
 
-const categoryIcons = {
-  travail: "💼",
-  sport: "🏋️",
-  perso: "🌿",
-  etudes: "📚",
-  autre: "✨"
-};
+// SIGNUP
+function signup() {
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
 
-const categoryColors = {
-  travail: "#3b82f6",
-  sport: "#ef4444",
-  perso: "#22c55e",
-  etudes: "#a855f7",
-  autre: "#f59e0b"
-};
+  auth.createUserWithEmailAndPassword(email, pass)
+    .then(() => alert("Compte créé !"))
+    .catch(err => alert(err.message));
+}
 
 // LOGIN
 function login() {
-  const username = document.getElementById("username").value;
-  if (!username) return alert("Entre un nom !");
-  localStorage.setItem("user", username);
-  currentUser = username;
-  loadUserData();
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+
+  auth.signInWithEmailAndPassword(email, pass)
+    .catch(err => alert(err.message));
 }
 
-function loadUserData() {
-  habits = JSON.parse(localStorage.getItem("habits_" + currentUser)) || [];
-  document.getElementById("username").style.display = "none";
-  document.querySelector("button").style.display = "none";
+// STATE
+auth.onAuthStateChanged(u => {
+  if (u) {
+    user = u;
+    document.getElementById("auth").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    loadData();
+  }
+});
+
+// LOAD
+async function loadData() {
+  const doc = await db.collection("users").doc(user.uid).get();
+  habits = doc.exists ? doc.data().habits : [];
   render();
 }
 
+// SAVE
 function save() {
-  localStorage.setItem("habits_" + currentUser, JSON.stringify(habits));
+  db.collection("users").doc(user.uid).set({ habits });
 }
 
 // ADD
 function addHabit() {
   const input = document.getElementById("habitInput");
+
   if (!input.value) return alert("Entre une habitude !");
 
-  let category = prompt("Catégorie (travail, sport, perso...)");
-  category = category ? category.toLowerCase() : "autre";
+  // 💰 LIMIT FREE
+  if (habits.length >= 5) {
+    alert("Limite gratuite atteinte 😎");
+    return;
+  }
 
   habits.push({
     name: input.value,
-    category,
     dates: {}
   });
 
@@ -60,84 +82,60 @@ function addHabit() {
 }
 
 // TOGGLE
-function toggleHabit(index) {
-  habits[index].dates[today] = !habits[index].dates[today];
-  save();
-  render();
-}
-
-// DRAG
-let dragIndex = null;
-
-function dragStart(index) {
-  dragIndex = index;
-}
-
-function drop(index) {
-  const temp = habits[dragIndex];
-  habits.splice(dragIndex, 1);
-  habits.splice(index, 0, temp);
+function toggleHabit(i) {
+  habits[i].dates[today] = !habits[i].dates[today];
   save();
   render();
 }
 
 // STREAK
 function getStreak(dates) {
-  let streak = 0;
+  let s = 0;
   let d = new Date();
 
   while (true) {
-    const key = d.toISOString().split("T")[0];
+    let key = d.toISOString().split("T")[0];
     if (dates[key]) {
-      streak++;
+      s++;
       d.setDate(d.getDate() - 1);
     } else break;
   }
 
-  return streak;
+  return s;
 }
 
 // RENDER
 function render() {
-  const container = document.getElementById("habitList");
-  container.innerHTML = "";
+  const list = document.getElementById("habitList");
+  list.innerHTML = "";
 
-  let doneCount = habits.filter(h => h.dates[today]).length;
+  let done = habits.filter(h => h.dates[today]).length;
 
   document.getElementById("stats").innerText =
-    `${doneCount} / ${habits.length} aujourd’hui`;
+    `${done}/${habits.length} aujourd’hui`;
 
-  let percent = habits.length ? (doneCount / habits.length) * 100 : 0;
-  document.getElementById("progress").style.width = percent + "%";
+  document.getElementById("progress").style.width =
+    (habits.length ? (done / habits.length) * 100 : 0) + "%";
 
-  habits.forEach((habit, index) => {
-    const done = habit.dates[today];
-    const streak = getStreak(habit.dates);
+  let best = 0;
 
-    const color = categoryColors[habit.category] || "#f59e0b";
-    const icon = categoryIcons[habit.category] || "✨";
+  habits.forEach((h, i) => {
+    const streak = getStreak(h.dates);
+    if (streak > best) best = streak;
 
-    const item = document.createElement("div");
-    item.className = "habit-item";
-    item.draggable = true;
+    const div = document.createElement("div");
+    div.className = "habit-item";
 
-    item.ondragstart = () => dragStart(index);
-    item.ondragover = (e) => e.preventDefault();
-    item.ondrop = () => drop(index);
-
-    item.innerHTML = `
-      <div class="left">
-        <span class="icon" style="background:${color}">${icon}</span>
-        <input type="checkbox" ${done ? "checked" : ""} onchange="toggleHabit(${index})">
-        <span>${habit.name}</span>
-      </div>
-
+    div.innerHTML = `
+      <input type="checkbox" ${h.dates[today] ? "checked" : ""} 
+      onchange="toggleHabit(${i})">
+      <span>${h.name}</span>
       <span class="streak">🔥 ${streak}</span>
     `;
 
-    container.appendChild(item);
+    list.appendChild(div);
   });
-}
 
-// AUTO LOAD
-if (currentUser) loadUserData();
+  document.getElementById("dashboard").innerText =
+    `🔥 Record : ${best} jours`;
+}
