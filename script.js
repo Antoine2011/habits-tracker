@@ -6,7 +6,15 @@ document.getElementById("date").innerText = "Aujourd'hui : " + today;
 
 // LOGIN SIMPLE
 function login() {
+  alert("login cliqué");
+
   const username = document.getElementById("username").value;
+
+  if (!username) {
+    alert("Entre un nom !");
+    return;
+  }
+
   localStorage.setItem("user", username);
   currentUser = username;
 
