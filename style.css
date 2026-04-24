@@ -1,55 +1,50 @@
 body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f172a, #020617);
+  font-family: Arial;
+  background: linear-gradient(rgba(15,23,42,0.9), rgba(15,23,42,0.9)),
+  url("https://images.unsplash.com/photo-1499750310107-5fef28a66643");
+  background-size: cover;
   color: white;
+  text-align: center;
+  padding: 20px;
 }
 
 .container {
-  max-width: 420px;
-  margin: 40px auto;
+  max-width: 400px;
+  margin: auto;
+  background: rgba(30,41,59,0.8);
   padding: 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
 }
 
 h1 {
-  text-align: center;
   margin-bottom: 20px;
 }
 
-/* CARD */
-.card {
-  background: rgba(30, 41, 59, 0.7);
-  padding: 20px;
-  border-radius: 20px;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-/* INPUT */
-input {
+input, button {
   width: 100%;
   padding: 12px;
+  margin: 6px 0;
   border-radius: 12px;
   border: none;
-  margin-bottom: 10px;
-  background: #020617;
+}
+
+input {
+  background: #0f172a;
   color: white;
 }
 
-/* BUTTON */
 button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: #22c55e;
   color: white;
   font-weight: bold;
   cursor: pointer;
-  margin-bottom: 10px;
 }
 
-/* PROGRESS */
+button:hover {
+  opacity: 0.9;
+}
+
 .progress-bar {
   height: 8px;
   background: #1e293b;
@@ -59,27 +54,41 @@ button {
 
 #progress {
   height: 100%;
-  background: linear-gradient(90deg, #22c55e, #4ade80);
+  background: #22c55e;
+  width: 0%;
   border-radius: 10px;
 }
 
-/* HABITS */
 .habit-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #020617;
-  padding: 12px;
+  background: #0f172a;
+  padding: 10px;
+  margin: 10px 0;
   border-radius: 12px;
-  margin-top: 10px;
-  transition: 0.2s;
-}
-
-.habit-item:hover {
-  transform: scale(1.02);
 }
 
 .streak {
-  color: #f97316;
+  color: orange;
+}
+
+/* 🔥 BOUTON PRO */
+.pro-btn {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  border: none;
+  padding: 14px;
+  border-radius: 14px;
+  color: white;
   font-weight: bold;
+  margin-top: 20px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.pro-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(249,115,22,0.6);
 }
