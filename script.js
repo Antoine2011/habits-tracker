@@ -1,5 +1,3 @@
-alert("JS chargé");
-
 let currentUser = localStorage.getItem("user") || null;
 let habits = [];
 
@@ -21,11 +19,9 @@ function login() {
   loadUserData();
 }
 
-// Charger données
 function loadUserData() {
   habits = JSON.parse(localStorage.getItem("habits_" + currentUser)) || [];
 
-  // cacher login
   document.getElementById("username").style.display = "none";
   document.querySelector("button").style.display = "none";
 
@@ -36,15 +32,7 @@ function save() {
   localStorage.setItem("habits_" + currentUser, JSON.stringify(habits));
 }
 
-// Ajouter habitude
-function addHabit() {
-  const input = document.getElementById("habitInput");
-
-  if (!input.value) {
-    alert("Entre une habitude !");
-    return;
-  }
-
+// AJOUT HABITUDE AVEC CATÉGORIE
 function addHabit() {
   const input = document.getElementById("habitInput");
 
@@ -65,7 +53,8 @@ function addHabit() {
   save();
   render();
 }
-// Toggle
+
+// TOGGLE
 function toggleHabit(index) {
   const habit = habits[index];
   habit.dates[today] = !habit.dates[today];
@@ -74,7 +63,7 @@ function toggleHabit(index) {
   render();
 }
 
-// Streak
+// STREAK
 function getStreak(dates) {
   let streak = 0;
   let currentDate = new Date();
@@ -84,51 +73,67 @@ function getStreak(dates) {
     if (dates[dateStr]) {
       streak++;
       currentDate.setDate(currentDate.getDate() - 1);
-    } else {
-      break;
-    }
+    } else break;
   }
 
   return streak;
 }
 
-// Render
+// RENDER AVEC CATÉGORIES
 function render() {
-  const list = document.getElementById("habitList");
-  list.innerHTML = "";
+  const container = document.getElementById("habitList");
+  container.innerHTML = "";
+
+  const categories = {};
 
   habits.forEach((habit, index) => {
-    const doneToday = habit.dates[today] || false;
-    const streak = getStreak(habit.dates);
+    if (!categories[habit.category]) {
+      categories[habit.category] = [];
+    }
+    categories[habit.category].push({ habit, index });
+  });
 
-    const li = document.createElement("li");
+  let doneCount = habits.filter(h => h.dates[today]).length;
 
-    li.innerHTML = `
-      <div class="habit-item">
+  document.getElementById("stats").innerText =
+    doneCount + " / " + habits.length + " habitudes faites aujourd’hui";
+
+  let percent = habits.length ? (doneCount / habits.length) * 100 : 0;
+  document.getElementById("progress").style.width = percent + "%";
+
+  for (let category in categories) {
+    const card = document.createElement("div");
+    card.className = "category-card";
+
+    const title = document.createElement("h3");
+    title.innerText = category;
+
+    card.appendChild(title);
+
+    categories[category].forEach(({ habit, index }) => {
+      const doneToday = habit.dates[today] || false;
+      const streak = getStreak(habit.dates);
+
+      const item = document.createElement("div");
+      item.className = "habit-item";
+
+      item.innerHTML = `
         <input type="checkbox" ${doneToday ? "checked" : ""} 
         onchange="toggleHabit(${index})">
         
         <span>${habit.name}</span>
         
         <span class="streak">🔥 ${streak}</span>
-      </div>
-    `;
+      `;
 
-    list.appendChild(li);
-  });
+      card.appendChild(item);
+    });
 
-  // 📊 stats
-  let doneCount = habits.filter(h => h.dates[today]).length;
-
-  document.getElementById("stats").innerText =
-    doneCount + " / " + habits.length + " habitudes faites aujourd’hui";
-
-  // 📈 progression
-  let percent = habits.length ? (doneCount / habits.length) * 100 : 0;
-  document.getElementById("progress").style.width = percent + "%";
+    container.appendChild(card);
+  }
 }
 
-// auto load
+// AUTO LOAD
 if (currentUser) {
   loadUserData();
 }
