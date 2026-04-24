@@ -92,3 +92,16 @@ function render() {
 if (currentUser) {
   loadUserData();
 }
+function login() {
+  const username = document.getElementById("username").value;
+
+  if (!username) {
+    alert("Entre un nom !");
+    return;
+  }
+
+  localStorage.setItem("user", username);
+  currentUser = username;
+
+  loadUserData();
+}
