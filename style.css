@@ -7,7 +7,13 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #020617);
+  background: 
+    linear-gradient(rgba(15, 23, 42, 0.85), rgba(2, 6, 23, 0.95)),
+    url("https://images.unsplash.com/photo-1492724441997-5dc865305da7");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
   color: white;
   display: flex;
   justify-content: center;
