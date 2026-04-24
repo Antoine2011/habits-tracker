@@ -1,11 +1,8 @@
 // CONFIG FIREBASE
 const firebaseConfig = {
-  apiKey: "AIzaSyDr39wbDbC0pE5huN_izcfmr5f9ODA4qD0",
+  apiKey: "AIzaSy...",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
   projectId: "habits-tracker-4ee66",
-  storageBucket: "habits-tracker-4ee66.firebasestorage.app",
-  messagingSenderId: "431055088426",
-  appId: "1:431055088426:web:85de2193119ef47ecbcc53"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -65,9 +62,8 @@ function addHabit() {
 
   if (!input.value) return alert("Entre une habitude !");
 
-  // 💰 LIMIT FREE
   if (habits.length >= 5) {
-    alert("Limite gratuite atteinte 😎");
+    alert("🚀 Passe en version PRO !");
     return;
   }
 
@@ -78,48 +74,9 @@ function addHabit() {
 
   input.value = "";
   save();
-function render() {
-  const list = document.getElementById("habitList");
-  list.innerHTML = "";
-
-  let done = habits.filter(h => h.dates[today]).length;
-
-  document.getElementById("stats").innerText =
-    `${done}/${habits.length} aujourd’hui`;
-
-  document.getElementById("progress").style.width =
-    (habits.length ? (done / habits.length) * 100 : 0) + "%";
-
-  let best = 0;
-
-  habits.forEach((h, i) => {
-    const streak = getStreak(h.dates);
-    if (streak > best) best = streak;
-
-    const div = document.createElement("div");
-    div.className = "habit-item";
-
-    div.innerHTML = `
-      <input type="checkbox" ${h.dates[today] ? "checked" : ""} 
-      onchange="toggleHabit(${i})">
-      <span>${h.name}</span>
-      <span class="streak">🔥 ${streak}</span>
-    `;
-
-    list.appendChild(div);
-  });
-
-  // ✅ ICI (dans render)
-  let total = habits.length;
-  let doneToday = habits.filter(h => h.dates[today]).length;
-  let percent = total ? Math.round((doneToday / total) * 100) : 0;
-
-  document.getElementById("dashboard").innerHTML = `
-    🔥 Record : ${best} jours <br>
-    📊 Complétion : ${percent}% <br>
-    🎯 Habitudes : ${total}
-  `;
+  render();
 }
+
 // TOGGLE
 function toggleHabit(i) {
   habits[i].dates[today] = !habits[i].dates[today];
@@ -143,7 +100,7 @@ function getStreak(dates) {
   return s;
 }
 
-// RENDER
+// RENDER (UNE SEULE VERSION)
 function render() {
   const list = document.getElementById("habitList");
   list.innerHTML = "";
@@ -175,6 +132,13 @@ function render() {
     list.appendChild(div);
   });
 
-  document.getElementById("dashboard").innerText =
-    `🔥 Record : ${best} jours`;
+  let total = habits.length;
+  let doneToday = habits.filter(h => h.dates[today]).length;
+  let percent = total ? Math.round((doneToday / total) * 100) : 0;
+
+  document.getElementById("dashboard").innerHTML = `
+    🔥 Record : ${best} jours <br>
+    📊 Complétion : ${percent}% <br>
+    🎯 Habitudes : ${total}
+  `;
 }
