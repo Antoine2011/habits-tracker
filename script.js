@@ -121,3 +121,7 @@ function login() {
   if (currentUser) {
     document.getElementById("username").style.display = "none";
 }
+let doneCount = habits.filter(h => h.dates[today]).length;
+
+document.getElementById("stats").innerText =
+  doneCount + " / " + habits.length + " habitudes faites aujourd’hui";
