@@ -4,28 +4,37 @@
   <meta charset="UTF-8">
   <title>Habit Tracker</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- FIREBASE (IMPORTANT) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 </head>
 
 <body>
 
 <div class="container">
 
-  <h1>Habit Tracker</h1>
+  <!-- 🔐 AUTH -->
+  <div id="auth" class="card">
+    <h1>Habit Tracker</h1>
 
-  <!-- LOGIN -->
-  <div id="auth">
     <input id="email" placeholder="Email">
     <input id="password" type="password" placeholder="Mot de passe">
+
     <button onclick="signup()">Créer compte</button>
     <button onclick="login()">Connexion</button>
   </div>
 
-  <!-- APP -->
-  <div id="app" style="display:none">
+  <!-- 📱 APP -->
+  <div id="app" class="card" style="display:none;">
+
+    <h1>Habit Tracker</h1>
+
     <input id="habitInput" placeholder="Nouvelle habitude">
     <button onclick="addHabit()">Ajouter</button>
 
-    <p id="stats"></p>
+    <h3 id="stats"></h3>
 
     <div class="progress-bar">
       <div id="progress"></div>
@@ -33,18 +42,14 @@
 
     <div id="habitList"></div>
 
-    <h3>📊 Dashboard</h3>
-    <p id="dashboard"></p>
+    <h3 id="dashboard"></h3>
+
+    <button onclick="goPremium()">🚀 Passer PRO</button>
+
   </div>
 
 </div>
 
-<!-- ✅ Firebase (OBLIGATOIRE) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-<!-- ✅ TON SCRIPT -->
 <script src="script.js"></script>
 
 </body>
