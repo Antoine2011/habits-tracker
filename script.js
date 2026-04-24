@@ -45,8 +45,19 @@ function addHabit() {
     return;
   }
 
+function addHabit() {
+  const input = document.getElementById("habitInput");
+
+  if (!input.value) {
+    alert("Entre une habitude !");
+    return;
+  }
+
+  const category = prompt("Catégorie ? (travail, sport, perso...)");
+
   habits.push({
     name: input.value,
+    category: category || "Autre",
     dates: {}
   });
 
@@ -54,7 +65,6 @@ function addHabit() {
   save();
   render();
 }
-
 // Toggle
 function toggleHabit(index) {
   const habit = habits[index];
