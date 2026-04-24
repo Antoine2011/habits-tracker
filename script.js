@@ -1,3 +1,4 @@
+alert("JS chargé");
 let currentUser = localStorage.getItem("user") || null;
 let habits = [];
 
