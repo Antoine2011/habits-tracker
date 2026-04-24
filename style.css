@@ -1,113 +1,47 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: -apple-system, sans-serif;
-  background: linear-gradient(rgba(15,23,42,0.9), rgba(2,6,23,0.95)),
-    url("https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b");
-  background-size: cover;
+  font-family: Arial;
+  background: #0f172a;
   color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
 }
 
 .container {
-  width: 100%;
-  max-width: 420px;
-  padding: 20px;
-  background: rgba(30,41,59,0.7);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 15px;
+  max-width: 400px;
+  margin: auto;
 }
 
 input, button {
   width: 100%;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 10px;
   border: none;
-  margin-bottom: 10px;
-}
-
-input {
-  background: #0f172a;
-  color: white;
 }
 
 button {
   background: #22c55e;
   color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#stats {
-  text-align: center;
-  margin: 10px 0;
 }
 
 .progress-bar {
   height: 8px;
-  background: #0f172a;
+  background: #1e293b;
   border-radius: 10px;
-  margin-bottom: 15px;
 }
 
 #progress {
   height: 100%;
-  width: 0%;
   background: #22c55e;
-  border-radius: 10px;
+  width: 0%;
 }
 
 .habit-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background: rgba(15,23,42,0.9);
-  padding: 10px;
-  border-radius: 12px;
-  margin-bottom: 8px;
-}
-
-.left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.icon {
-  padding: 5px;
-  border-radius: 6px;
-  font-size: 12px;
+  margin: 10px 0;
 }
 
 .streak {
-  color: #f97316;
-}
-
-input[type="checkbox"]:checked + span {
-  text-decoration: line-through;
-  opacity: 0.5;
-}
-
-/* MOBILE */
-@media (max-width: 500px) {
-  .container {
-    width: 95%;
-    padding: 15px;
-  }
-
-  h1 {
-    font-size: 20px;
-  }
+  color: orange;
 }
