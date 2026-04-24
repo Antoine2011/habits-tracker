@@ -1,57 +1,115 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
   color: white;
-  text-align: center;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
+/* CONTAINER */
 .container {
-  max-width: 500px;
-  margin: auto;
+  width: 100%;
+  max-width: 420px;
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(20px);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
 }
 
+/* TITLE */
 h1 {
+  text-align: center;
   margin-bottom: 20px;
+  font-size: 24px;
 }
 
+/* INPUTS */
 input {
-  padding: 10px;
-  border-radius: 10px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
-  margin: 5px;
-  width: 70%;
+  margin-bottom: 10px;
+  background: #0f172a;
+  color: white;
+  outline: none;
 }
 
+/* BUTTON */
 button {
-  padding: 10px 15px;
-  border-radius: 10px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
   background: #22c55e;
   color: white;
+  font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
+  margin-bottom: 10px;
 }
 
 button:hover {
+  transform: translateY(-2px);
   background: #16a34a;
-  transform: scale(1.05);
 }
 
+/* DATE */
+#date {
+  text-align: center;
+  margin: 15px 0;
+  opacity: 0.8;
+}
+
+/* STATS */
+#stats {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #0f172a;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+#progress {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  border-radius: 10px;
+  transition: 0.4s;
+}
+
+/* LIST */
 ul {
-  padding: 0;
   list-style: none;
 }
 
+/* HABIT CARD */
 .habit-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #1e293b;
+  background: rgba(15, 23, 42, 0.8);
   padding: 12px;
-  margin: 10px auto;
+  margin-bottom: 10px;
   border-radius: 12px;
-  max-width: 400px;
   transition: 0.2s;
 }
 
@@ -59,13 +117,20 @@ ul {
   transform: scale(1.02);
 }
 
-.streak {
-  color: #f97316;
-  font-weight: bold;
+/* CHECKBOX STYLE */
+input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 10px;
 }
 
-#stats {
-  margin: 15px 0;
-  font-size: 18px;
+/* TEXT DONE */
+input[type="checkbox"]:checked + span {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* STREAK */
+.streak {
+  color: #f97316;
   font-weight: bold;
 }
