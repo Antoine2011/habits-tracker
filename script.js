@@ -114,3 +114,6 @@ function login() {
 
   loadUserData();
 }
+  if (currentUser) {
+    document.getElementById("username").style.display = "none";
+}
