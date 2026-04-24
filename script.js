@@ -1,11 +1,12 @@
 alert("JS chargé");
+
 let currentUser = localStorage.getItem("user") || null;
 let habits = [];
 
 const today = new Date().toISOString().split("T")[0];
 document.getElementById("date").innerText = "Aujourd'hui : " + today;
 
-// LOGIN SIMPLE
+// LOGIN
 function login() {
   const username = document.getElementById("username").value;
 
@@ -22,9 +23,13 @@ function login() {
   loadUserData();
 }
 
-// Charger données utilisateur
+// Charger données
 function loadUserData() {
   habits = JSON.parse(localStorage.getItem("habits_" + currentUser)) || [];
+
+  // cacher input username
+  document.getElementById("username").style.display = "none";
+
   render();
 }
 
@@ -36,6 +41,11 @@ function save() {
 function addHabit() {
   const input = document.getElementById("habitInput");
 
+  if (!input.value) {
+    alert("Entre une habitude !");
+    return;
+  }
+
   habits.push({
     name: input.value,
     dates: {}
@@ -45,22 +55,17 @@ function addHabit() {
   save();
   render();
 }
-  if (!input.value) {
-    alert("Entre une habitude !");
-  return;
-}
 
-// Toggle pour aujourd’hui
+// Toggle
 function toggleHabit(index) {
   const habit = habits[index];
-
   habit.dates[today] = !habit.dates[today];
 
   save();
   render();
 }
 
-// RESET automatique (juste visuel car date change)
+// Streak
 function getStreak(dates) {
   let streak = 0;
   let currentDate = new Date();
@@ -78,6 +83,7 @@ function getStreak(dates) {
   return streak;
 }
 
+// Render
 function render() {
   const list = document.getElementById("habitList");
   list.innerHTML = "";
@@ -101,27 +107,15 @@ function render() {
 
     list.appendChild(li);
   });
+
+  // stats
+  let doneCount = habits.filter(h => h.dates[today]).length;
+
+  document.getElementById("stats").innerText =
+    doneCount + " / " + habits.length + " habitudes faites aujourd’hui";
 }
+
+// auto load
 if (currentUser) {
   loadUserData();
 }
-function login() {
-  const username = document.getElementById("username").value;
-
-  if (!username) {
-    alert("Entre un nom !");
-    return;
-  }
-
-  localStorage.setItem("user", username);
-  currentUser = username;
-
-  loadUserData();
-}
-  if (currentUser) {
-    document.getElementById("username").style.display = "none";
-}
-let doneCount = habits.filter(h => h.dates[today]).length;
-
-document.getElementById("stats").innerText =
-  doneCount + " / " + habits.length + " habitudes faites aujourd’hui";
