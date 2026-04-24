@@ -78,9 +78,48 @@ function addHabit() {
 
   input.value = "";
   save();
-  render();
-}
+function render() {
+  const list = document.getElementById("habitList");
+  list.innerHTML = "";
 
+  let done = habits.filter(h => h.dates[today]).length;
+
+  document.getElementById("stats").innerText =
+    `${done}/${habits.length} aujourd’hui`;
+
+  document.getElementById("progress").style.width =
+    (habits.length ? (done / habits.length) * 100 : 0) + "%";
+
+  let best = 0;
+
+  habits.forEach((h, i) => {
+    const streak = getStreak(h.dates);
+    if (streak > best) best = streak;
+
+    const div = document.createElement("div");
+    div.className = "habit-item";
+
+    div.innerHTML = `
+      <input type="checkbox" ${h.dates[today] ? "checked" : ""} 
+      onchange="toggleHabit(${i})">
+      <span>${h.name}</span>
+      <span class="streak">🔥 ${streak}</span>
+    `;
+
+    list.appendChild(div);
+  });
+
+  // ✅ ICI (dans render)
+  let total = habits.length;
+  let doneToday = habits.filter(h => h.dates[today]).length;
+  let percent = total ? Math.round((doneToday / total) * 100) : 0;
+
+  document.getElementById("dashboard").innerHTML = `
+    🔥 Record : ${best} jours <br>
+    📊 Complétion : ${percent}% <br>
+    🎯 Habitudes : ${total}
+  `;
+}
 // TOGGLE
 function toggleHabit(i) {
   habits[i].dates[today] = !habits[i].dates[today];
