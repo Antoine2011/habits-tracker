@@ -1,38 +1,21 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Habit Tracker</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-<body>
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDr39wbDbC0pE5huN_izcfmr5f9ODA4qD0",
+  authDomain: "habits-tracker-4ee66.firebaseapp.com",
+  projectId: "habits-tracker-4ee66",
+  storageBucket: "habits-tracker-4ee66.firebasestorage.app",
+  messagingSenderId: "431055088426",
+  appId: "1:431055088426:web:85de2193119ef47ecbcc53",
+  measurementId: "G-5DH53EE5LT"
+};
 
-<div class="container">
-
-  <h1>Habit Tracker</h1>
-
-  <input id="username" placeholder="Nom utilisateur">
-  <button onclick="login()">Se connecter</button>
-
-  <hr>
-
-  <input id="habitInput" placeholder="Nouvelle habitude">
-  <button onclick="addHabit()">Ajouter</button>
-
-  <h3 id="date"></h3>
-
-  <p id="stats"></p>
-
-  <div class="progress-bar">
-    <div id="progress"></div>
-  </div>
-
-  <div id="habitList"></div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
