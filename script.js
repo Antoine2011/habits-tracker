@@ -1,11 +1,11 @@
 // 🔥 CONFIG FIREBASE (REMPLACE PAR LA TIENNE)
 const firebaseConfig = {
-  apiKey: "TA_VRAIE_API_KEY",
+  apiKey: "AIzaSyXXXXXXXXXXXXXXXX",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
   projectId: "habits-tracker-4ee66",
   storageBucket: "habits-tracker-4ee66.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdef123456"
 };
 
 // 🔐 INIT SAFE
