@@ -2,60 +2,69 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Habit Tracker PRO</title>
+  <title>Habit App</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="app">
+<div class="phone">
 
-  <h1>🔥 Habit Tracker</h1>
+  <div class="app">
 
-  <p id="quote" class="quote"></p>
-
-  <div class="card add">
-    <input id="habitInput" placeholder="Nouvelle habitude...">
-    <button onclick="addHabit()">Ajouter</button>
-  </div>
-
-  <div class="card stats">
-    <p id="stats"></p>
-
-    <div class="progress-bar">
-      <div id="progress"></div>
+    <!-- HEADER -->
+    <div class="header">
+      <h1>Habits</h1>
+      <p id="quote"></p>
     </div>
-  </div>
 
-  <div id="habitList"></div>
+    <!-- ADD -->
+    <div class="add">
+      <input id="habitInput" placeholder="Nouvelle habitude">
+      <button onclick="addHabit()">+</button>
+    </div>
 
-  <div class="card dashboard">
-    <h3>📊 Dashboard</h3>
-    <p id="dashboard"></p>
-  </div>
+    <!-- STATS -->
+    <div class="stats">
+      <p id="stats"></p>
 
-  <div class="card premium">
-    <h3>🚀 Passe en PRO</h3>
-    <p>Habitudes illimitées + stats avancées</p>
+      <div class="progress-bar">
+        <div id="progress"></div>
+      </div>
+    </div>
 
-    <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00" target="_blank">
-      <button class="pro-btn">Devenir PRO</button>
-    </a>
+    <!-- LIST -->
+    <div id="habitList"></div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard">
+      <p id="dashboard"></p>
+    </div>
+
+    <!-- PRO -->
+    <div class="premium">
+      <p>🚀 Passe PRO</p>
+
+      <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00">
+        <button class="pro-btn">Upgrade</button>
+      </a>
+    </div>
+
   </div>
 
 </div>
 
 <!-- PAYWALL -->
 <div id="paywall" class="paywall hidden">
-  <div class="paywall-content">
-    <h2>🚀 Passe PRO</h2>
-    <p>Débloque tout 🔥</p>
+  <div class="paywall-box">
+    <h2>👑 PRO</h2>
+    <p>Unlock everything</p>
 
     <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00">
-      <button class="pro-btn">Devenir PRO</button>
+      <button>Upgrade</button>
     </a>
 
-    <button onclick="closePaywall()" class="close-btn">Fermer</button>
+    <button onclick="closePaywall()">Close</button>
   </div>
 </div>
 
