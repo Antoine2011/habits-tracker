@@ -4,143 +4,129 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family: "Segoe UI", Arial;
   background: linear-gradient(135deg, #0f172a, #1e293b);
   color: white;
 }
 
-/* 📱 Container */
+/* APP */
 .app {
   max-width: 420px;
   margin: auto;
   padding: 20px;
 }
 
-/* 🏷️ Title */
 h1 {
   text-align: center;
-  margin-bottom: 25px;
-  font-size: 28px;
 }
 
-/* 📦 Cards */
+/* QUOTE */
+.quote {
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+/* CARDS */
 .card {
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
   padding: 15px;
   border-radius: 16px;
   margin-bottom: 15px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  transition: 0.3s;
 }
 
-/* ➕ Add */
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* ADD */
 .add {
   display: flex;
   gap: 10px;
 }
 
-.add input {
-  flex: 1;
-}
-
-/* ✏️ Inputs */
 input {
-  padding: 12px;
-  border-radius: 12px;
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
   border: none;
-  background: #0f172a;
-  color: white;
 }
 
-/* 🔘 Buttons */
+/* BUTTON */
 button {
-  padding: 12px;
-  border-radius: 12px;
+  padding: 10px;
+  border-radius: 10px;
   border: none;
   background: #22c55e;
   color: white;
-  font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 button:hover {
-  transform: scale(1.05);
   background: #16a34a;
 }
 
-/* 📋 Habits */
+/* LIST */
 .habit {
   display: flex;
-  align-items: center;
   justify-content: space-between;
   background: #1e293b;
-  padding: 12px;
-  border-radius: 14px;
+  padding: 10px;
   margin: 10px 0;
-  transition: 0.2s;
+  border-radius: 10px;
+  animation: fadeIn 0.3s;
 }
 
-.habit:hover {
-  transform: scale(1.02);
-}
-
-/* 🔥 Streak */
 .streak {
-  color: #f97316;
-  font-weight: bold;
+  color: orange;
 }
 
-/* 📊 Progress */
+/* PROGRESS */
 .progress-bar {
   height: 8px;
   background: #334155;
   border-radius: 10px;
-  margin-top: 10px;
-  overflow: hidden;
 }
 
 #progress {
   height: 100%;
   width: 0%;
   background: #22c55e;
-  border-radius: 10px;
-  transition: width 0.3s;
 }
 
-/* 💰 Premium */
-.premium {
+/* PAYWALL */
+.paywall {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paywall-content {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 16px;
   text-align: center;
 }
 
-.pro-btn {
+.hidden {
+  display: none;
+}
+
+.close-btn {
   margin-top: 10px;
-  width: 100%;
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-  font-size: 16px;
+  background: gray;
 }
 
-.pro-btn:hover {
-  box-shadow: 0 0 15px rgba(249,115,22,0.6);
-}
-
-/* 🔓 bouton test */
-.test-btn {
-  margin-top: 10px;
-  background: #3b82f6;
-}
-
-.test-btn:hover {
-  background: #2563eb;
-}
-
-/* 📱 Responsive */
-@media (max-width: 500px) {
-  h1 {
-    font-size: 24px;
-  }
-
-  button {
-    font-size: 14px;
-  }
+/* ANIMATION */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
 }
