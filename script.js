@@ -1,78 +1,42 @@
-// CONFIG FIREBASE
-const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "habits-tracker-4ee66.firebaseapp.com",
-  projectId: "habits-tracker-4ee66"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-let user = null;
+let currentUser = localStorage.getItem("user") || null;
 let habits = [];
-let isPro = false;
 
 const today = new Date().toISOString().split("T")[0];
 
-// SIGNUP
-function signup() {
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
-
-  auth.createUserWithEmailAndPassword(email, pass)
-    .then(() => alert("Compte créé !"))
-    .catch(err => alert(err.message));
-}
-
 // LOGIN
 function login() {
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
+  const username = document.getElementById("username").value;
 
-  auth.signInWithEmailAndPassword(email, pass)
-    .catch(err => alert(err.message));
+  if (!username) return alert("Entre un nom");
+
+  currentUser = username;
+  localStorage.setItem("user", username);
+
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("appContent").style.display = "block";
+
+  loadData();
 }
 
-// STATE
-auth.onAuthStateChanged(u => {
-  if (u) {
-    user = u;
-    document.getElementById("auth").style.display = "none";
-    document.getElementById("app").style.display = "block";
-    loadData();
-  }
-});
-
 // LOAD
-async function loadData() {
-  const doc = await db.collection("users").doc(user.uid).get();
-
-  if (doc.exists) {
-    habits = doc.data().habits || [];
-    isPro = doc.data().isPro || false;
-  }
-
+function loadData() {
+  habits = JSON.parse(localStorage.getItem("habits_" + currentUser)) || [];
   render();
 }
 
 // SAVE
 function save() {
-  db.collection("users").doc(user.uid).set({
-    habits,
-    isPro
-  });
+  localStorage.setItem("habits_" + currentUser, JSON.stringify(habits));
 }
 
 // ADD
 function addHabit() {
   const input = document.getElementById("habitInput");
 
-  if (!input.value) return alert("Entre une habitude !");
+  if (!input.value) return alert("Entre une habitude");
 
-  if (!isPro && habits.length >= 5) {
-    alert("🚀 Passe en PRO pour ajouter plus d’habitudes !");
+  if (habits.length >= 5) {
+    alert("Version gratuite limitée à 5 😎");
     return;
   }
 
@@ -115,21 +79,14 @@ function render() {
   list.innerHTML = "";
 
   let done = habits.filter(h => h.dates[today]).length;
-
-  document.getElementById("stats").innerText =
-    `${done}/${habits.length} aujourd’hui`;
-
-  document.getElementById("progress").style.width =
-    (habits.length ? (done / habits.length) * 100 : 0) + "%";
-
   let best = 0;
 
   habits.forEach((h, i) => {
-    const streak = getStreak(h.dates);
+    let streak = getStreak(h.dates);
     if (streak > best) best = streak;
 
     const div = document.createElement("div");
-    div.className = "habit-item";
+    div.className = "habit";
 
     div.innerHTML = `
       <input type="checkbox" ${h.dates[today] ? "checked" : ""} 
@@ -141,16 +98,22 @@ function render() {
     list.appendChild(div);
   });
 
-  let total = habits.length;
-  let percent = total ? Math.round((done / total) * 100) : 0;
+  let percent = habits.length ? Math.round((done / habits.length) * 100) : 0;
+
+  document.getElementById("stats").innerText =
+    `${done}/${habits.length} aujourd’hui (${percent}%)`;
+
+  document.getElementById("progress").style.width = percent + "%";
 
   document.getElementById("dashboard").innerHTML = `
     🔥 Record : ${best} jours <br>
-    📊 Complétion : ${percent}% <br>
-    🎯 Habitudes : ${total}
+    🎯 Habitudes : ${habits.length}
   `;
+}
 
-  // 👑 STATUS PRO
-  document.getElementById("proStatus").innerText =
-    isPro ? "👑 Compte PRO" : "🆓 Version gratuite";
+// AUTO LOGIN
+if (currentUser) {
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("appContent").style.display = "block";
+  loadData();
 }
