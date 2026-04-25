@@ -1,12 +1,25 @@
 // ================= FIREBASE CONFIG =================
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "MET_TA_VRAIE_API_KEY_ICI",
+  apiKey: "AIzaSyDr39wbDbC0pE5huN_izcfmr5f9ODA4qD0",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
   projectId: "habits-tracker-4ee66",
-  storageBucket: "habits-tracker-4ee66.appspot.com",
-  messagingSenderId: "MET_LE_VRAI_ID",
-  appId: "MET_LE_VRAI_APP_ID"
+  storageBucket: "habits-tracker-4ee66.firebasestorage.app",
+  messagingSenderId: "431055088426",
+  appId: "1:431055088426:web:043ca31bbb72fc88cbcc53",
+  measurementId: "G-8DKJNC4KMT"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 // INIT
 firebase.initializeApp(firebaseConfig);
