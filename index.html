@@ -4,51 +4,46 @@
   <meta charset="UTF-8">
   <title>Habit Tracker</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-  <h1>Habit Tracker</h1>
+  <h1>🔥 Habit Tracker</h1>
 
-  <!-- AUTH -->
-  <div id="auth">
-    <input id="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Mot de passe">
-    <button onclick="signup()">Créer compte</button>
-    <button onclick="login()">Connexion</button>
+  <!-- ➕ Ajouter habitude -->
+  <div class="card add">
+    <input id="habitInput" placeholder="Nouvelle habitude...">
+    <button onclick="addHabit()">Ajouter</button>
   </div>
 
-  <!-- APP -->
-  <div id="app" style="display:none;">
-
-    <p id="proStatus"></p>
-
-    <input id="habitInput" placeholder="Nouvelle habitude">
-    <button onclick="addHabit()">Ajouter</button>
-
-    <h3 id="stats"></h3>
+  <!-- 📊 Stats -->
+  <div class="card stats">
+    <p id="stats">0/0 aujourd’hui</p>
 
     <div class="progress-bar">
       <div id="progress"></div>
     </div>
+  </div>
 
-    <div id="habitList"></div>
+  <!-- 📋 Liste -->
+  <div id="habitList"></div>
 
+  <!-- 📈 Dashboard -->
+  <div class="card dashboard">
     <h3>📊 Dashboard</h3>
-    <p id="dashboard"></p>
+    <p id="dashboard">Aucune donnée</p>
+  </div>
 
-    <!-- 💰 STRIPE -->
+  <!-- 💰 PRO -->
+  <div class="card premium">
+    <h3>🚀 Passe en PRO</h3>
+    <p>Habitudes illimitées + stats avancées</p>
+
     <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00" target="_blank">
-      <button class="pro-btn">🚀 Passer en PRO</button>
+      <button class="pro-btn">Devenir PRO</button>
     </a>
-
   </div>
 
 </div>
