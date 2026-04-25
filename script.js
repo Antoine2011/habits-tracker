@@ -1,42 +1,32 @@
-let currentUser = localStorage.getItem("user") || null;
 let habits = [];
+let isPro = false;
 
 const today = new Date().toISOString().split("T")[0];
 
-// LOGIN
-function login() {
-  const username = document.getElementById("username").value;
+// 💬 QUOTES
+const quotes = [
+  "🔥 Discipline = liberté",
+  "💪 1% better every day",
+  "🚀 No excuses"
+];
 
-  if (!username) return alert("Entre un nom");
+document.getElementById("quote").innerText =
+  quotes[Math.floor(Math.random() * quotes.length)];
 
-  currentUser = username;
-  localStorage.setItem("user", username);
-
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("appContent").style.display = "block";
-
-  loadData();
-}
-
-// LOAD
-function loadData() {
-  habits = JSON.parse(localStorage.getItem("habits_" + currentUser)) || [];
-  render();
-}
-
-// SAVE
-function save() {
-  localStorage.setItem("habits_" + currentUser, JSON.stringify(habits));
+// 🔓 PRO CHECK (Stripe redirect)
+if (window.location.search.includes("success=true")) {
+  isPro = true;
+  alert("👑 PRO activé !");
 }
 
 // ADD
 function addHabit() {
   const input = document.getElementById("habitInput");
 
-  if (!input.value) return alert("Entre une habitude");
+  if (!input.value) return alert("Entre une habitude !");
 
-  if (habits.length >= 5) {
-    alert("Version gratuite limitée à 5 😎");
+  if (!isPro && habits.length >= 5) {
+    showPaywall();
     return;
   }
 
@@ -46,14 +36,21 @@ function addHabit() {
   });
 
   input.value = "";
-  save();
   render();
+}
+
+// PAYWALL
+function showPaywall() {
+  document.getElementById("paywall").classList.remove("hidden");
+}
+
+function closePaywall() {
+  document.getElementById("paywall").classList.add("hidden");
 }
 
 // TOGGLE
 function toggleHabit(i) {
   habits[i].dates[today] = !habits[i].dates[today];
-  save();
   render();
 }
 
@@ -79,14 +76,25 @@ function render() {
   list.innerHTML = "";
 
   let done = habits.filter(h => h.dates[today]).length;
+
+  document.getElementById("stats").innerText =
+    `${done}/${habits.length} aujourd’hui`;
+
+  document.getElementById("progress").style.width =
+    (habits.length ? (done / habits.length) * 100 : 0) + "%";
+
   let best = 0;
 
   habits.forEach((h, i) => {
-    let streak = getStreak(h.dates);
+    const streak = getStreak(h.dates);
     if (streak > best) best = streak;
 
     const div = document.createElement("div");
     div.className = "habit";
+
+    if (streak >= 5) {
+      div.style.border = "1px solid orange";
+    }
 
     div.innerHTML = `
       <input type="checkbox" ${h.dates[today] ? "checked" : ""} 
@@ -98,22 +106,32 @@ function render() {
     list.appendChild(div);
   });
 
-  let percent = habits.length ? Math.round((done / habits.length) * 100) : 0;
+  let total = habits.length;
+  let percent = total ? Math.round((done / total) * 100) : 0;
 
-  document.getElementById("stats").innerText =
-    `${done}/${habits.length} aujourd’hui (${percent}%)`;
-
-  document.getElementById("progress").style.width = percent + "%";
+  // 📊 STATS PRO
+  let weekly = habits.reduce((acc, h) => {
+    for (let i = 0; i < 7; i++) {
+      let d = new Date();
+      d.setDate(d.getDate() - i);
+      let key = d.toISOString().split("T")[0];
+      if (h.dates[key]) acc++;
+    }
+    return acc;
+  }, 0);
 
   document.getElementById("dashboard").innerHTML = `
     🔥 Record : ${best} jours <br>
-    🎯 Habitudes : ${habits.length}
+    📊 Complétion : ${percent}% <br>
+    🎯 Habitudes : ${total} <br>
+    ${isPro ? "📈 Cette semaine : " + weekly : "🔒 Stats PRO"}
   `;
+
+  // 🎉 Perfect day
+  if (done === habits.length && habits.length > 0) {
+    setTimeout(() => alert("🎉 Journée parfaite !"), 200);
+  }
 }
 
-// AUTO LOGIN
-if (currentUser) {
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("appContent").style.display = "block";
-  loadData();
-}
+// INIT
+render();
