@@ -1,13 +1,17 @@
 // ================= FIREBASE CONFIG =================
 const firebaseConfig = {
-  apiKey: "AIzaSyDr39wbDbC0pE5huN_izcfmr5f9ODA4qD0",
+  apiKey: "TA_VRAIE_CLE",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
   projectId: "habits-tracker-4ee66",
-  storageBucket: "habits-tracker-4ee66.firebasestorage.app",
+  storageBucket: "habits-tracker-4ee66.appspot.com",
   messagingSenderId: "431055088426",
-  appId: "1:431055088426:web:043ca31bbb72fc88cbcc53",
-  measurementId: "G-8DKJNC4KMT"
+  appId: "TON_APP_ID"
 };
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
