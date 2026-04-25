@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Habit Tracker</title>
+  <title>Habit Tracker PRO</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -12,56 +12,57 @@
 
   <h1>🔥 Habit Tracker</h1>
 
-  <!-- 🔐 LOGIN -->
-  <div id="loginBox" class="card">
-    <input id="username" placeholder="Ton nom">
-    <button onclick="login()">Se connecter</button>
+  <!-- ✨ Quote -->
+  <p id="quote" class="quote"></p>
+
+  <!-- ➕ Ajouter -->
+  <div class="card add">
+    <input id="habitInput" placeholder="Nouvelle habitude...">
+    <button onclick="addHabit()">Ajouter</button>
   </div>
 
-  <!-- 📱 APP -->
-  <div id="appContent" style="display:none;">
+  <!-- 📊 Stats -->
+  <div class="card stats">
+    <p id="stats">0/0 aujourd’hui</p>
 
-    <!-- ➕ Ajouter -->
-    <div class="card add">
-      <input id="habitInput" placeholder="Nouvelle habitude...">
-      <button onclick="addHabit()">Ajouter</button>
+    <div class="progress-bar">
+      <div id="progress"></div>
     </div>
-
-    <!-- 📊 Stats -->
-    <div class="card stats">
-      <p id="stats"></p>
-
-      <div class="progress-bar">
-        <div id="progress"></div>
-      </div>
-    </div>
-
-    <!-- 📋 Liste -->
-    <div id="habitList"></div>
-
-    <!-- 📊 Dashboard -->
-    <div class="card dashboard">
-      <h3>📊 Dashboard</h3>
-      <p id="dashboard"></p>
-    </div>
-
-    <!-- 💰 PRO -->
-    <div class="card premium">
-      <h3>🚀 Version PRO</h3>
-      <p id="proText">🆓 Version gratuite</p>
-
-      <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00" target="_blank">
-        <button class="pro-btn">Devenir PRO</button>
-      </a>
-
-      <!-- bouton test -->
-      <button onclick="unlockPro()" class="test-btn">
-        🔓 Activer PRO (test)
-      </button>
-    </div>
-
   </div>
 
+  <!-- 📋 Liste -->
+  <div id="habitList"></div>
+
+  <!-- 📈 Dashboard -->
+  <div class="card dashboard">
+    <h3>📊 Dashboard</h3>
+    <p id="dashboard">Aucune donnée</p>
+  </div>
+
+  <!-- 💰 Premium -->
+  <div class="card premium">
+    <h3>🚀 Passe en PRO</h3>
+    <p>Habitudes illimitées + stats avancées</p>
+
+    <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00" target="_blank">
+      <button class="pro-btn">Devenir PRO</button>
+    </a>
+  </div>
+
+</div>
+
+<!-- 💎 PAYWALL -->
+<div id="paywall" class="paywall hidden">
+  <div class="paywall-content">
+    <h2>🚀 Passe PRO</h2>
+    <p>Habitudes illimitées + statistiques avancées</p>
+
+    <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00">
+      <button>Devenir PRO</button>
+    </a>
+
+    <button onclick="closePaywall()" class="close-btn">Fermer</button>
+  </div>
 </div>
 
 <script src="script.js"></script>
