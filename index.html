@@ -10,12 +10,13 @@
 
 <div class="app">
 
+  <!-- 🏷️ Titre -->
   <h1>🔥 Habit Tracker</h1>
 
-  <!-- ✨ Quote -->
+  <!-- 💬 Quote -->
   <p id="quote" class="quote"></p>
 
-  <!-- ➕ Ajouter -->
+  <!-- ➕ Ajouter une habitude -->
   <div class="card add">
     <input id="habitInput" placeholder="Nouvelle habitude...">
     <button onclick="addHabit()">Ajouter</button>
@@ -30,7 +31,7 @@
     </div>
   </div>
 
-  <!-- 📋 Liste -->
+  <!-- 📋 Liste des habitudes -->
   <div id="habitList"></div>
 
   <!-- 📈 Dashboard -->
@@ -39,7 +40,7 @@
     <p id="dashboard">Aucune donnée</p>
   </div>
 
-  <!-- 💰 Premium -->
+  <!-- 💰 PREMIUM -->
   <div class="card premium">
     <h3>🚀 Passe en PRO</h3>
     <p>Habitudes illimitées + stats avancées</p>
@@ -51,14 +52,20 @@
 
 </div>
 
-<!-- 💎 PAYWALL -->
+<!-- 💎 PAYWALL (popup) -->
 <div id="paywall" class="paywall hidden">
   <div class="paywall-content">
     <h2>🚀 Passe PRO</h2>
-    <p>Habitudes illimitées + statistiques avancées</p>
+    <p>Débloque toutes les fonctionnalités :</p>
+
+    <ul>
+      <li>✔ Habitudes illimitées</li>
+      <li>✔ Statistiques avancées</li>
+      <li>✔ Expérience premium</li>
+    </ul>
 
     <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00">
-      <button>Devenir PRO</button>
+      <button class="pro-btn">Devenir PRO</button>
     </a>
 
     <button onclick="closePaywall()" class="close-btn">Fermer</button>
