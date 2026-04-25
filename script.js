@@ -1,3 +1,10 @@
+// CHECK SI PAIEMENT RÉUSSI
+const urlParams = new URLSearchParams(window.location.search);
+
+if (urlParams.get("success") === "true") {
+  localStorage.setItem("pro", "true");
+  alert("🔥 Paiement réussi ! Tu es PRO !");
+}
 let habits = [];
 let isPro = false;
 
