@@ -10,37 +10,30 @@
 
 <div class="app">
 
-  <!-- 🏷️ Titre -->
   <h1>🔥 Habit Tracker</h1>
 
-  <!-- 💬 Quote -->
   <p id="quote" class="quote"></p>
 
-  <!-- ➕ Ajouter une habitude -->
   <div class="card add">
     <input id="habitInput" placeholder="Nouvelle habitude...">
     <button onclick="addHabit()">Ajouter</button>
   </div>
 
-  <!-- 📊 Stats -->
   <div class="card stats">
-    <p id="stats">0/0 aujourd’hui</p>
+    <p id="stats"></p>
 
     <div class="progress-bar">
       <div id="progress"></div>
     </div>
   </div>
 
-  <!-- 📋 Liste des habitudes -->
   <div id="habitList"></div>
 
-  <!-- 📈 Dashboard -->
   <div class="card dashboard">
     <h3>📊 Dashboard</h3>
-    <p id="dashboard">Aucune donnée</p>
+    <p id="dashboard"></p>
   </div>
 
-  <!-- 💰 PREMIUM -->
   <div class="card premium">
     <h3>🚀 Passe en PRO</h3>
     <p>Habitudes illimitées + stats avancées</p>
@@ -52,17 +45,11 @@
 
 </div>
 
-<!-- 💎 PAYWALL (popup) -->
+<!-- PAYWALL -->
 <div id="paywall" class="paywall hidden">
   <div class="paywall-content">
     <h2>🚀 Passe PRO</h2>
-    <p>Débloque toutes les fonctionnalités :</p>
-
-    <ul>
-      <li>✔ Habitudes illimitées</li>
-      <li>✔ Statistiques avancées</li>
-      <li>✔ Expérience premium</li>
-    </ul>
+    <p>Débloque tout 🔥</p>
 
     <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00">
       <button class="pro-btn">Devenir PRO</button>
