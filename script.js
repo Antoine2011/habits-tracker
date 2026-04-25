@@ -1,23 +1,14 @@
 // ================= FIREBASE CONFIG =================
 const firebaseConfig = {
-  apiKey: "TA_VRAIE_CLE",
+  apiKey: "TA_VRAIE_API_KEY",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
   projectId: "habits-tracker-4ee66",
   storageBucket: "habits-tracker-4ee66.appspot.com",
   messagingSenderId: "431055088426",
-  appId: "TON_APP_ID"
+  appId: "TON_VRAI_APP_ID"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-// INIT
+// INIT (UNE SEULE FOIS)
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
@@ -30,10 +21,10 @@ let isPro = false;
 
 const today = new Date().toISOString().split("T")[0];
 
+console.log("🔥 JS OK");
 
 // ================= AUTH =================
 
-// SIGNUP
 function signup() {
   const email = document.getElementById("email").value.trim();
   const pass = document.getElementById("password").value.trim();
@@ -48,7 +39,6 @@ function signup() {
     .catch(err => alert(err.message));
 }
 
-// LOGIN
 function login() {
   const email = document.getElementById("email").value.trim();
   const pass = document.getElementById("password").value.trim();
@@ -57,11 +47,9 @@ function login() {
     .catch(err => alert(err.message));
 }
 
-// LOGOUT
 function logout() {
   auth.signOut();
 }
-
 
 // ================= STATE =================
 
@@ -79,10 +67,8 @@ auth.onAuthStateChanged(async (u) => {
   }
 });
 
-
 // ================= DATA =================
 
-// LOAD USER DATA
 async function loadData() {
   const ref = db.collection("users").doc(user.uid);
   const doc = await ref.get();
@@ -102,7 +88,6 @@ async function loadData() {
   render();
 }
 
-// SAVE DATA
 function save() {
   if (!user) return;
 
@@ -112,10 +97,8 @@ function save() {
   });
 }
 
-
 // ================= HABITS =================
 
-// ADD
 function addHabit() {
   const input = document.getElementById("habitInput");
 
@@ -136,24 +119,20 @@ function addHabit() {
   render();
 }
 
-// TOGGLE
 function toggleHabit(i) {
   habits[i].dates[today] = !habits[i].dates[today];
   save();
   render();
 }
 
-// DELETE
 function deleteHabit(i) {
   habits.splice(i, 1);
   save();
   render();
 }
 
-
 // ================= STATS =================
 
-// STREAK
 function getStreak(dates) {
   let count = 0;
   let d = new Date();
@@ -169,7 +148,6 @@ function getStreak(dates) {
 
   return count;
 }
-
 
 // ================= UI =================
 
