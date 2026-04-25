@@ -1,11 +1,17 @@
-// 🔥 CONFIG FIREBASE
+// 🔥 CONFIG FIREBASE (REMPLACE PAR LA TIENNE)
 const firebaseConfig = {
-  apiKey: "AIzaSy...",
+  apiKey: "TA_VRAIE_API_KEY",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
-  projectId: "habits-tracker-4ee66"
+  projectId: "habits-tracker-4ee66",
+  storageBucket: "habits-tracker-4ee66.appspot.com",
+  messagingSenderId: "XXXX",
+  appId: "XXXX"
 };
 
-firebase.initializeApp(firebaseConfig);
+// 🔐 INIT SAFE
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const auth = firebase.auth();
 const db = firebase.firestore();
@@ -16,29 +22,43 @@ let isPro = false;
 
 const today = new Date().toISOString().split("T")[0];
 
+console.log("🔥 JS chargé");
+
 
 // ================= AUTH =================
 
 // SIGNUP
 function signup() {
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const pass = document.getElementById("password").value.trim();
+
+  if (!email || !pass) {
+    alert("Remplis tous les champs !");
+    return;
+  }
 
   auth.createUserWithEmailAndPassword(email, pass)
-    .then(() => alert("Compte créé !"))
-    .catch(err => alert(err.message));
+    .then(() => alert("✅ Compte créé !"))
+    .catch(err => {
+      console.error(err);
+      alert(err.message);
+    });
 }
 
 // LOGIN
 function login() {
-  const email = document.getElementById("email").value;
-  const pass = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const pass = document.getElementById("password").value.trim();
 
   auth.signInWithEmailAndPassword(email, pass)
-    .catch(err => alert(err.message));
+    .then(() => console.log("✅ Connecté"))
+    .catch(err => {
+      console.error(err);
+      alert(err.message);
+    });
 }
 
-// LOGOUT (bonus)
+// LOGOUT
 function logout() {
   auth.signOut();
 }
@@ -47,6 +67,8 @@ function logout() {
 // ================= STATE =================
 
 auth.onAuthStateChanged(async (u) => {
+  console.log("Auth state:", u);
+
   if (u) {
     user = u;
 
@@ -73,7 +95,6 @@ async function loadData() {
       habits = doc.data().habits || [];
       isPro = doc.data().isPro || false;
     } else {
-      // créer le doc automatiquement
       await ref.set({
         habits: [],
         isPro: false
@@ -84,7 +105,7 @@ async function loadData() {
 
     render();
   } catch (e) {
-    console.error("Erreur loadData:", e);
+    console.error("❌ loadData error:", e);
   }
 }
 
@@ -105,7 +126,10 @@ function save() {
 function addHabit() {
   const input = document.getElementById("habitInput");
 
-  if (!input.value) return alert("Entre une habitude !");
+  if (!input.value) {
+    alert("Entre une habitude !");
+    return;
+  }
 
   if (!isPro && habits.length >= 5) {
     alert("🚀 Passe en PRO pour ajouter plus d’habitudes !");
@@ -129,7 +153,7 @@ function toggleHabit(i) {
   render();
 }
 
-// DELETE (bonus stylé)
+// DELETE
 function deleteHabit(i) {
   if (!confirm("Supprimer cette habitude ?")) return;
 
