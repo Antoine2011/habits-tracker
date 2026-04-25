@@ -1,11 +1,11 @@
 // ================= FIREBASE CONFIG =================
 const firebaseConfig = {
-  apiKey: "TA_VRAIE_API_KEY",
+  apiKey: "AIzaSyDr39wbDbC0pE5huN_izcfmr5f9ODA4qD0",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
   projectId: "habits-tracker-4ee66",
   storageBucket: "habits-tracker-4ee66.appspot.com",
   messagingSenderId: "431055088426",
-  appId: "TON_VRAI_APP_ID"
+  appId: "1:431055088426:web:043ca31bbb72fc88cbcc53"
 };
 
 // INIT (UNE SEULE FOIS)
