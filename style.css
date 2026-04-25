@@ -124,6 +124,16 @@ button:hover {
   box-shadow: 0 0 15px rgba(249,115,22,0.6);
 }
 
+/* 🔓 bouton test */
+.test-btn {
+  margin-top: 10px;
+  background: #3b82f6;
+}
+
+.test-btn:hover {
+  background: #2563eb;
+}
+
 /* 📱 Responsive */
 @media (max-width: 500px) {
   h1 {
