@@ -6,7 +6,7 @@ if (urlParams.get("success") === "true") {
   alert("🔥 Paiement réussi ! Tu es PRO !");
 }
 let habits = [];
-let isPro = false;
+let isPro = localStorage.getItem("pro") === "true";
 
 const today = new Date().toISOString().split("T")[0];
 
