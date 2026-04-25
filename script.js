@@ -1,28 +1,25 @@
-// 🔥 CONFIG FIREBASE (REMPLACE PAR LA TIENNE)
+// ================= FIREBASE CONFIG =================
 const firebaseConfig = {
-  apiKey: "AIzaSyREALKEY...",
+  apiKey: "MET_TA_VRAIE_API_KEY_ICI",
   authDomain: "habits-tracker-4ee66.firebaseapp.com",
   projectId: "habits-tracker-4ee66",
   storageBucket: "habits-tracker-4ee66.appspot.com",
-  messagingSenderId: "431055088426",
-  appId: "1:431055088426:web:85de2193119ef47ecbcc53"
+  messagingSenderId: "MET_LE_VRAI_ID",
+  appId: "MET_LE_VRAI_APP_ID"
 };
 
-// 🔐 INIT SAFE
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// INIT
+firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// ================= VARIABLES =================
 let user = null;
 let habits = [];
 let isPro = false;
 
 const today = new Date().toISOString().split("T")[0];
-
-console.log("🔥 JS chargé");
 
 
 // ================= AUTH =================
@@ -33,16 +30,13 @@ function signup() {
   const pass = document.getElementById("password").value.trim();
 
   if (!email || !pass) {
-    alert("Remplis tous les champs !");
+    alert("Remplis tous les champs");
     return;
   }
 
   auth.createUserWithEmailAndPassword(email, pass)
-    .then(() => alert("✅ Compte créé !"))
-    .catch(err => {
-      console.error(err);
-      alert(err.message);
-    });
+    .then(() => alert("Compte créé"))
+    .catch(err => alert(err.message));
 }
 
 // LOGIN
@@ -51,11 +45,7 @@ function login() {
   const pass = document.getElementById("password").value.trim();
 
   auth.signInWithEmailAndPassword(email, pass)
-    .then(() => console.log("✅ Connecté"))
-    .catch(err => {
-      console.error(err);
-      alert(err.message);
-    });
+    .catch(err => alert(err.message));
 }
 
 // LOGOUT
@@ -67,8 +57,6 @@ function logout() {
 // ================= STATE =================
 
 auth.onAuthStateChanged(async (u) => {
-  console.log("Auth state:", u);
-
   if (u) {
     user = u;
 
@@ -85,31 +73,27 @@ auth.onAuthStateChanged(async (u) => {
 
 // ================= DATA =================
 
-// LOAD
+// LOAD USER DATA
 async function loadData() {
-  try {
-    const ref = db.collection("users").doc(user.uid);
-    const doc = await ref.get();
+  const ref = db.collection("users").doc(user.uid);
+  const doc = await ref.get();
 
-    if (doc.exists) {
-      habits = doc.data().habits || [];
-      isPro = doc.data().isPro || false;
-    } else {
-      await ref.set({
-        habits: [],
-        isPro: false
-      });
-      habits = [];
-      isPro = false;
-    }
-
-    render();
-  } catch (e) {
-    console.error("❌ loadData error:", e);
+  if (doc.exists) {
+    habits = doc.data().habits || [];
+    isPro = doc.data().isPro || false;
+  } else {
+    await ref.set({
+      habits: [],
+      isPro: false
+    });
+    habits = [];
+    isPro = false;
   }
+
+  render();
 }
 
-// SAVE
+// SAVE DATA
 function save() {
   if (!user) return;
 
@@ -126,13 +110,10 @@ function save() {
 function addHabit() {
   const input = document.getElementById("habitInput");
 
-  if (!input.value) {
-    alert("Entre une habitude !");
-    return;
-  }
+  if (!input.value) return;
 
   if (!isPro && habits.length >= 5) {
-    alert("🚀 Passe en PRO pour ajouter plus d’habitudes !");
+    alert("Passe en PRO pour plus d’habitudes");
     return;
   }
 
@@ -155,8 +136,6 @@ function toggleHabit(i) {
 
 // DELETE
 function deleteHabit(i) {
-  if (!confirm("Supprimer cette habitude ?")) return;
-
   habits.splice(i, 1);
   save();
   render();
@@ -167,18 +146,19 @@ function deleteHabit(i) {
 
 // STREAK
 function getStreak(dates) {
-  let s = 0;
+  let count = 0;
   let d = new Date();
 
   while (true) {
-    let key = d.toISOString().split("T")[0];
+    const key = d.toISOString().split("T")[0];
+
     if (dates[key]) {
-      s++;
+      count++;
       d.setDate(d.getDate() - 1);
     } else break;
   }
 
-  return s;
+  return count;
 }
 
 
@@ -206,25 +186,22 @@ function render() {
     div.className = "habit";
 
     div.innerHTML = `
-      <input type="checkbox" ${h.dates[today] ? "checked" : ""} 
-        onchange="toggleHabit(${i})">
-
+      <input type="checkbox" ${h.dates[today] ? "checked" : ""} onchange="toggleHabit(${i})">
       <span>${h.name}</span>
-
       <span class="streak">🔥 ${streak}</span>
-
       <button onclick="deleteHabit(${i})">❌</button>
     `;
 
     list.appendChild(div);
   });
 
-  let total = habits.length;
-  let percent = total ? Math.round((done / total) * 100) : 0;
+  let percent = habits.length
+    ? Math.round((done / habits.length) * 100)
+    : 0;
 
   document.getElementById("dashboard").innerHTML = `
     🔥 Record : ${best} jours <br>
     📊 Complétion : ${percent}% <br>
-    🎯 Habitudes : ${total}
+    🎯 Habitudes : ${habits.length}
   `;
 }
