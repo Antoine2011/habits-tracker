@@ -16,8 +16,10 @@ body {
   padding: 20px;
 }
 
+/* TITLE */
 h1 {
   text-align: center;
+  animation: fadeIn 0.8s ease;
 }
 
 /* QUOTE */
@@ -25,20 +27,23 @@ h1 {
   text-align: center;
   opacity: 0.7;
   margin-bottom: 20px;
+  animation: fadeIn 1s ease;
 }
 
 /* CARDS */
 .card {
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   padding: 15px;
   border-radius: 16px;
   margin-bottom: 15px;
-  transition: 0.3s;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  animation: slideUp 0.6s ease;
 }
 
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px) scale(1.01);
 }
 
 /* ADD */
@@ -49,36 +54,48 @@ h1 {
 
 input {
   flex: 1;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
+  background: #0f172a;
+  color: white;
 }
 
 /* BUTTON */
 button {
-  padding: 10px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 12px;
   border: none;
   background: #22c55e;
   color: white;
+  font-weight: bold;
   cursor: pointer;
+  transition: 0.25s;
 }
 
 button:hover {
+  transform: scale(1.05);
   background: #16a34a;
 }
 
-/* LIST */
+/* HABIT */
 .habit {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: #1e293b;
-  padding: 10px;
+  padding: 12px;
   margin: 10px 0;
-  border-radius: 10px;
-  animation: fadeIn 0.3s;
+  border-radius: 14px;
+  animation: fadeIn 0.4s ease;
+  transition: 0.2s;
 }
 
+.habit:hover {
+  transform: scale(1.02);
+}
+
+/* STREAK */
 .streak {
   color: orange;
 }
@@ -88,12 +105,14 @@ button:hover {
   height: 8px;
   background: #334155;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 #progress {
   height: 100%;
   width: 0%;
-  background: #22c55e;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  transition: width 0.4s ease;
 }
 
 /* PAYWALL */
@@ -107,26 +126,44 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.3s ease;
 }
 
 .paywall-content {
   background: #1e293b;
-  padding: 20px;
-  border-radius: 16px;
+  padding: 25px;
+  border-radius: 18px;
   text-align: center;
+  animation: pop 0.4s ease;
 }
 
 .hidden {
   display: none;
 }
 
-.close-btn {
-  margin-top: 10px;
-  background: gray;
+/* PREMIUM BUTTON */
+.pro-btn {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
 }
 
-/* ANIMATION */
+/* ANIMATIONS */
 @keyframes fadeIn {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0 }
+  100% { transform: scale(1); opacity: 1 }
 }
