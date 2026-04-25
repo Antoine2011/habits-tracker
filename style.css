@@ -4,148 +4,87 @@
 
 body {
   margin: 0;
-  background: #0f172a;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  display: flex;
-  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont;
+  background: linear-gradient(180deg, #0f172a, #020617);
+  color: white;
 }
 
-/* 📱 PHONE FRAME */
-.phone {
-  width: 390px;
-  min-height: 100vh;
-  background: #111827;
-  border-radius: 30px;
+.hidden {
+  display: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h1 {
+  font-size: 40px;
+}
+
+.hero button {
+  margin-top: 20px;
+}
+
+.auth, .app {
+  max-width: 420px;
+  margin: auto;
   padding: 20px;
 }
 
-/* APP */
-.app {
-  color: white;
-}
-
-/* HEADER */
-.header h1 {
-  margin: 0;
-  font-size: 28px;
-}
-
-.header p {
-  opacity: 0.6;
-  margin-bottom: 20px;
-}
-
-/* ADD */
-.add {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.add input {
-  flex: 1;
-  padding: 12px;
-  border-radius: 14px;
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border-radius: 12px;
   border: none;
-  background: #1f2937;
+  background: #1e293b;
   color: white;
 }
 
-.add button {
-  width: 45px;
-  border-radius: 14px;
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
   border: none;
   background: #22c55e;
   color: white;
-  font-size: 20px;
+  font-weight: bold;
 }
 
-/* STATS */
-.stats {
-  background: #1f2937;
+.card {
+  background: rgba(255,255,255,0.05);
   padding: 15px;
   border-radius: 16px;
-  margin-bottom: 15px;
+  margin: 12px 0;
+}
+
+.habit {
+  display: flex;
+  justify-content: space-between;
+  background: #1e293b;
+  padding: 12px;
+  border-radius: 12px;
+  margin: 8px 0;
 }
 
 .progress-bar {
-  height: 6px;
-  background: #374151;
+  height: 8px;
+  background: #334155;
   border-radius: 10px;
 }
 
 #progress {
   height: 100%;
-  width: 0%;
   background: #22c55e;
   border-radius: 10px;
-  transition: 0.3s;
-}
-
-/* HABITS */
-.habit {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #1f2937;
-  padding: 14px;
-  border-radius: 16px;
-  margin-bottom: 10px;
-  transition: 0.2s;
-}
-
-.habit:active {
-  transform: scale(0.97);
-}
-
-.streak {
-  color: orange;
-}
-
-/* DASHBOARD */
-.dashboard {
-  background: #1f2937;
-  padding: 15px;
-  border-radius: 16px;
-  margin-top: 10px;
-}
-
-/* PREMIUM */
-.premium {
-  margin-top: 15px;
-  text-align: center;
 }
 
 .pro-btn {
-  margin-top: 5px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 14px;
-  border: none;
   background: linear-gradient(135deg, #f59e0b, #f97316);
-  color: white;
 }
 
-/* PAYWALL */
-.paywall {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.paywall-box {
-  background: #1f2937;
-  padding: 20px;
-  border-radius: 20px;
-  text-align: center;
-}
-
-.hidden {
-  display: none;
+.fake-pro {
+  margin-top: 10px;
+  background: #334155;
 }
