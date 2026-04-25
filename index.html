@@ -2,72 +2,61 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Habit App</title>
+  <title>Habit Tracker</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="phone">
+<div class="app" id="app" style="display:none;">
 
-  <div class="app">
+  <h1>🔥 Habit Tracker</h1>
 
-    <!-- HEADER -->
-    <div class="header">
-      <h1>Habits</h1>
-      <p id="quote"></p>
-    </div>
-
-    <!-- ADD -->
-    <div class="add">
-      <input id="habitInput" placeholder="Nouvelle habitude">
-      <button onclick="addHabit()">+</button>
-    </div>
-
-    <!-- STATS -->
-    <div class="stats">
-      <p id="stats"></p>
-
-      <div class="progress-bar">
-        <div id="progress"></div>
-      </div>
-    </div>
-
-    <!-- LIST -->
-    <div id="habitList"></div>
-
-    <!-- DASHBOARD -->
-    <div class="dashboard">
-      <p id="dashboard"></p>
-    </div>
-
-    <!-- PRO -->
-    <div class="premium">
-      <p>🚀 Passe PRO</p>
-
-      <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00">
-        <button class="pro-btn">Upgrade</button>
-      </a>
-    </div>
-
+  <div class="card add">
+    <input id="habitInput" placeholder="Nouvelle habitude...">
+    <button onclick="addHabit()">Ajouter</button>
   </div>
 
-</div>
+  <div class="card stats">
+    <p id="stats">0/0 aujourd’hui</p>
+    <div class="progress-bar">
+      <div id="progress"></div>
+    </div>
+  </div>
 
-<!-- PAYWALL -->
-<div id="paywall" class="paywall hidden">
-  <div class="paywall-box">
-    <h2>👑 PRO</h2>
-    <p>Unlock everything</p>
+  <div id="habitList"></div>
 
-    <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00">
-      <button>Upgrade</button>
+  <div class="card dashboard">
+    <h3>📊 Dashboard</h3>
+    <p id="dashboard">Aucune donnée</p>
+  </div>
+
+  <div class="card premium">
+    <h3>🚀 Passe en PRO</h3>
+    <p>Habitudes illimitées + stats avancées</p>
+
+    <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00" target="_blank">
+      <button class="pro-btn">Devenir PRO</button>
     </a>
-
-    <button onclick="closePaywall()">Close</button>
   </div>
+
 </div>
 
+<!-- AUTH UI -->
+<div id="auth" class="app">
+  <h2>Connexion</h2>
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Mot de passe">
+  <button onclick="login()">Se connecter</button>
+  <button onclick="signup()">Créer un compte</button>
+</div>
+
+<!-- ✅ FIREBASE (OBLIGATOIRE) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<!-- TON SCRIPT -->
 <script src="script.js"></script>
 
 </body>
