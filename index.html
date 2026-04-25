@@ -2,48 +2,22 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Habit Tracker</title>
+  <title>HabitFlow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="app" id="app" style="display:none;">
-
-  <h1>🔥 Habit Tracker</h1>
-
-  <div class="card add">
-    <input id="habitInput" placeholder="Nouvelle habitude...">
-    <button onclick="addHabit()">Ajouter</button>
-  </div>
-
-  <div class="card stats">
-    <p id="stats">0/0 aujourd’hui</p>
-    <div class="progress-bar">
-      <div id="progress"></div>
-    </div>
-  </div>
-
-  <div id="habitList"></div>
-
-  <div class="card dashboard">
-    <h3>📊 Dashboard</h3>
-    <p id="dashboard">Aucune donnée</p>
-  </div>
-
-  <div class="card premium">
-    <h3>🚀 Passe en PRO</h3>
-    <p>Habitudes illimitées + stats avancées</p>
-
-    <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00" target="_blank">
-      <button class="pro-btn">Devenir PRO</button>
-    </a>
-  </div>
-
+<!-- HERO -->
+<div id="hero" class="hero">
+  <h1>HabitFlow</h1>
+  <p>Deviens constant. Change ta vie.</p>
+  <button onclick="showAuth()">Commencer</button>
 </div>
 
-<!-- AUTH UI -->
-<div id="auth" class="app">
+<!-- AUTH -->
+<div id="auth" class="auth hidden">
   <h2>Connexion</h2>
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Mot de passe">
@@ -51,13 +25,46 @@
   <button onclick="signup()">Créer un compte</button>
 </div>
 
-<!-- ✅ FIREBASE (OBLIGATOIRE) -->
+<!-- APP -->
+<div id="app" class="app hidden">
+
+  <header>
+    <h2>🔥 Mes habitudes</h2>
+    <button onclick="logout()">🚪</button>
+  </header>
+
+  <div class="card add">
+    <input id="habitInput" placeholder="Nouvelle habitude...">
+    <button onclick="addHabit()">+</button>
+  </div>
+
+  <div class="card stats">
+    <p id="stats"></p>
+    <div class="progress-bar">
+      <div id="progress"></div>
+    </div>
+  </div>
+
+  <div id="habitList"></div>
+
+  <div class="card premium">
+    <h3>🚀 Passer PRO</h3>
+    <p>Habitudes illimitées + stats avancées</p>
+
+    <a href="https://buy.stripe.com/test_fZu7sN2TF15zgiO4LmaMU00" target="_blank">
+      <button class="pro-btn">Devenir PRO</button>
+    </a>
+
+    <button onclick="activatePro()" class="fake-pro">J’ai payé</button>
+  </div>
+
+</div>
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-<!-- TON SCRIPT -->
 <script src="script.js"></script>
-
 </body>
 </html>
