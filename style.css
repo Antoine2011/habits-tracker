@@ -4,115 +4,126 @@
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: white;
+  background: #0f172a;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+/* 📱 PHONE FRAME */
+.phone {
+  width: 390px;
+  min-height: 100vh;
+  background: #111827;
+  border-radius: 30px;
+  padding: 20px;
 }
 
 /* APP */
 .app {
-  max-width: 420px;
-  margin: auto;
-  padding: 20px;
+  color: white;
 }
 
-/* TITLE */
-h1 {
-  text-align: center;
-  animation: fadeIn 0.8s ease;
+/* HEADER */
+.header h1 {
+  margin: 0;
+  font-size: 28px;
 }
 
-/* QUOTE */
-.quote {
-  text-align: center;
-  opacity: 0.7;
+.header p {
+  opacity: 0.6;
   margin-bottom: 20px;
-  animation: fadeIn 1s ease;
-}
-
-/* CARDS */
-.card {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-  padding: 15px;
-  border-radius: 16px;
-  margin-bottom: 15px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-  animation: slideUp 0.6s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px) scale(1.01);
 }
 
 /* ADD */
 .add {
   display: flex;
   gap: 10px;
+  margin-bottom: 15px;
 }
 
-input {
+.add input {
   flex: 1;
   padding: 12px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: none;
-  background: #0f172a;
+  background: #1f2937;
   color: white;
 }
 
-/* BUTTON */
-button {
-  padding: 12px;
-  border-radius: 12px;
+.add button {
+  width: 45px;
+  border-radius: 14px;
   border: none;
   background: #22c55e;
   color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.25s;
+  font-size: 20px;
 }
 
-button:hover {
-  transform: scale(1.05);
-  background: #16a34a;
+/* STATS */
+.stats {
+  background: #1f2937;
+  padding: 15px;
+  border-radius: 16px;
+  margin-bottom: 15px;
 }
 
-/* HABIT */
-.habit {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #1e293b;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 14px;
-  animation: fadeIn 0.4s ease;
-  transition: 0.2s;
-}
-
-.habit:hover {
-  transform: scale(1.02);
-}
-
-/* STREAK */
-.streak {
-  color: orange;
-}
-
-/* PROGRESS */
 .progress-bar {
-  height: 8px;
-  background: #334155;
+  height: 6px;
+  background: #374151;
   border-radius: 10px;
-  overflow: hidden;
 }
 
 #progress {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #22c55e, #4ade80);
-  transition: width 0.4s ease;
+  background: #22c55e;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+/* HABITS */
+.habit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1f2937;
+  padding: 14px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  transition: 0.2s;
+}
+
+.habit:active {
+  transform: scale(0.97);
+}
+
+.streak {
+  color: orange;
+}
+
+/* DASHBOARD */
+.dashboard {
+  background: #1f2937;
+  padding: 15px;
+  border-radius: 16px;
+  margin-top: 10px;
+}
+
+/* PREMIUM */
+.premium {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.pro-btn {
+  margin-top: 5px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+  color: white;
 }
 
 /* PAYWALL */
@@ -126,44 +137,15 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: fadeIn 0.3s ease;
 }
 
-.paywall-content {
-  background: #1e293b;
-  padding: 25px;
-  border-radius: 18px;
+.paywall-box {
+  background: #1f2937;
+  padding: 20px;
+  border-radius: 20px;
   text-align: center;
-  animation: pop 0.4s ease;
 }
 
 .hidden {
   display: none;
-}
-
-/* PREMIUM BUTTON */
-.pro-btn {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-}
-
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from { opacity: 0 }
-  to { opacity: 1 }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pop {
-  0% { transform: scale(0.8); opacity: 0 }
-  100% { transform: scale(1); opacity: 1 }
 }
