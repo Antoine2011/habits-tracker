@@ -7,7 +7,7 @@ let isPro = localStorage.getItem("pro") === "true";
 const today = new Date().toISOString().split("T")[0];
 
 // =============================
-// 💳 CHECK STRIPE SUCCESS
+// 💳 STRIPE SUCCESS
 // =============================
 const params = new URLSearchParams(window.location.search);
 
@@ -15,7 +15,7 @@ if (params.get("success") === "true") {
   isPro = true;
   localStorage.setItem("pro", "true");
 
-  alert("👑 Paiement réussi ! Tu es maintenant PRO !");
+  alert("👑 Paiement réussi ! PRO activé !");
 }
 
 // =============================
@@ -77,10 +77,19 @@ function closePaywall() {
 }
 
 // =============================
-// ✅ TOGGLE HABIT
+// ✅ TOGGLE HABIT (ANIMATION)
 // =============================
 function toggleHabit(i) {
   habits[i].dates[today] = !habits[i].dates[today];
+
+  const items = document.querySelectorAll(".habit");
+
+  if (items[i]) {
+    items[i].style.transform = "scale(1.1)";
+    setTimeout(() => {
+      items[i].style.transform = "scale(1)";
+    }, 150);
+  }
 
   save();
   render();
