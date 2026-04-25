@@ -1,56 +1,114 @@
-// =============================
-// 🔥 INIT
-// =============================
-let habits = JSON.parse(localStorage.getItem("habits")) || [];
-let isPro = localStorage.getItem("pro") === "true";
+// 🔥 CONFIG FIREBASE
+const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "habits-tracker-4ee66.firebaseapp.com",
+  projectId: "habits-tracker-4ee66"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+let user = null;
+let habits = [];
+let isPro = false;
 
 const today = new Date().toISOString().split("T")[0];
 
-// =============================
-// 💳 STRIPE SUCCESS
-// =============================
-const params = new URLSearchParams(window.location.search);
 
-if (params.get("success") === "true") {
-  isPro = true;
-  localStorage.setItem("pro", "true");
+// ================= AUTH =================
 
-  alert("👑 Paiement réussi ! PRO activé !");
+// SIGNUP
+function signup() {
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
+
+  auth.createUserWithEmailAndPassword(email, pass)
+    .then(() => alert("Compte créé !"))
+    .catch(err => alert(err.message));
 }
 
-// =============================
-// 💬 QUOTES
-// =============================
-const quotes = [
-  "🔥 Discipline = liberté",
-  "💪 1% better every day",
-  "🚀 No excuses",
-  "🏆 Stay consistent",
-  "⏳ Small steps every day"
-];
+// LOGIN
+function login() {
+  const email = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
 
-document.getElementById("quote").innerText =
-  quotes[Math.floor(Math.random() * quotes.length)];
+  auth.signInWithEmailAndPassword(email, pass)
+    .catch(err => alert(err.message));
+}
+
+// LOGOUT (bonus)
+function logout() {
+  auth.signOut();
+}
 
 
-// =============================
-// 💾 SAVE
-// =============================
+// ================= STATE =================
+
+auth.onAuthStateChanged(async (u) => {
+  if (u) {
+    user = u;
+
+    document.getElementById("auth").style.display = "none";
+    document.getElementById("app").style.display = "block";
+
+    await loadData();
+  } else {
+    document.getElementById("auth").style.display = "block";
+    document.getElementById("app").style.display = "none";
+  }
+});
+
+
+// ================= DATA =================
+
+// LOAD
+async function loadData() {
+  try {
+    const ref = db.collection("users").doc(user.uid);
+    const doc = await ref.get();
+
+    if (doc.exists) {
+      habits = doc.data().habits || [];
+      isPro = doc.data().isPro || false;
+    } else {
+      // créer le doc automatiquement
+      await ref.set({
+        habits: [],
+        isPro: false
+      });
+      habits = [];
+      isPro = false;
+    }
+
+    render();
+  } catch (e) {
+    console.error("Erreur loadData:", e);
+  }
+}
+
+// SAVE
 function save() {
-  localStorage.setItem("habits", JSON.stringify(habits));
+  if (!user) return;
+
+  db.collection("users").doc(user.uid).set({
+    habits,
+    isPro
+  });
 }
 
-// =============================
-// ➕ ADD HABIT
-// =============================
+
+// ================= HABITS =================
+
+// ADD
 function addHabit() {
   const input = document.getElementById("habitInput");
 
   if (!input.value) return alert("Entre une habitude !");
 
-  // 🔒 LIMIT FREE
   if (!isPro && habits.length >= 5) {
-    showPaywall();
+    alert("🚀 Passe en PRO pour ajouter plus d’habitudes !");
     return;
   }
 
@@ -60,51 +118,36 @@ function addHabit() {
   });
 
   input.value = "";
-
   save();
   render();
 }
 
-// =============================
-// 🔓 PAYWALL
-// =============================
-function showPaywall() {
-  document.getElementById("paywall").classList.remove("hidden");
-}
-
-function closePaywall() {
-  document.getElementById("paywall").classList.add("hidden");
-}
-
-// =============================
-// ✅ TOGGLE HABIT (ANIMATION)
-// =============================
+// TOGGLE
 function toggleHabit(i) {
   habits[i].dates[today] = !habits[i].dates[today];
-
-  const items = document.querySelectorAll(".habit");
-
-  if (items[i]) {
-    items[i].style.transform = "scale(1.1)";
-    setTimeout(() => {
-      items[i].style.transform = "scale(1)";
-    }, 150);
-  }
-
   save();
   render();
 }
 
-// =============================
-// 🔥 STREAK
-// =============================
+// DELETE (bonus stylé)
+function deleteHabit(i) {
+  if (!confirm("Supprimer cette habitude ?")) return;
+
+  habits.splice(i, 1);
+  save();
+  render();
+}
+
+
+// ================= STATS =================
+
+// STREAK
 function getStreak(dates) {
   let s = 0;
   let d = new Date();
 
   while (true) {
     let key = d.toISOString().split("T")[0];
-
     if (dates[key]) {
       s++;
       d.setDate(d.getDate() - 1);
@@ -114,16 +157,15 @@ function getStreak(dates) {
   return s;
 }
 
-// =============================
-// 🎨 RENDER
-// =============================
+
+// ================= UI =================
+
 function render() {
   const list = document.getElementById("habitList");
   list.innerHTML = "";
 
   let done = habits.filter(h => h.dates[today]).length;
 
-  // 📊 Stats
   document.getElementById("stats").innerText =
     `${done}/${habits.length} aujourd’hui`;
 
@@ -139,16 +181,15 @@ function render() {
     const div = document.createElement("div");
     div.className = "habit";
 
-    // 🔥 highlight streak
-    if (streak >= 5) {
-      div.style.border = "1px solid orange";
-    }
-
     div.innerHTML = `
       <input type="checkbox" ${h.dates[today] ? "checked" : ""} 
-      onchange="toggleHabit(${i})">
+        onchange="toggleHabit(${i})">
+
       <span>${h.name}</span>
+
       <span class="streak">🔥 ${streak}</span>
+
+      <button onclick="deleteHabit(${i})">❌</button>
     `;
 
     list.appendChild(div);
@@ -157,40 +198,9 @@ function render() {
   let total = habits.length;
   let percent = total ? Math.round((done / total) * 100) : 0;
 
-  // 📈 STATS PRO
-  let weekly = habits.reduce((acc, h) => {
-    for (let i = 0; i < 7; i++) {
-      let d = new Date();
-      d.setDate(d.getDate() - i);
-      let key = d.toISOString().split("T")[0];
-      if (h.dates[key]) acc++;
-    }
-    return acc;
-  }, 0);
-
-  // 📊 Dashboard
   document.getElementById("dashboard").innerHTML = `
     🔥 Record : ${best} jours <br>
     📊 Complétion : ${percent}% <br>
-    🎯 Habitudes : ${total} <br>
-    ${isPro ? "📈 Cette semaine : " + weekly : "🔒 Stats PRO"}
+    🎯 Habitudes : ${total}
   `;
-
-  // 🎉 PERFECT DAY
-  if (done === habits.length && habits.length > 0) {
-    setTimeout(() => {
-      alert("🎉 Journée parfaite !");
-    }, 200);
-  }
-
-  // 👑 UI PRO
-  if (isPro) {
-    const premiumBox = document.querySelector(".premium");
-    if (premiumBox) premiumBox.style.display = "none";
-  }
 }
-
-// =============================
-// 🚀 INIT
-// =============================
-render();
